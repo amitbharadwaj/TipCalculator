@@ -16,5 +16,7 @@
     <string name="textOther">Other</string>
     <string name="textTotal">Total</string>
     <string name="testTipAdded">Tip Added</string>
+    <string name="textEmpty"></string>
+    <string name="textDollar">$</string>
 
 </resources>

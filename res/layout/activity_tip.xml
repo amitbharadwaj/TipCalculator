@@ -1,127 +1,159 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity" >
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context=".TipActivity" >
 
-    <TextView
-        android:id="@+id/ltAmount"
-        android:layout_width="wrap_content"
+    <TableLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:text="@string/textAmount"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:background="@color/light_pink" >
 
-    <EditText
-        android:id="@+id/etAmount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/ltAmount"
-        android:layout_toRightOf="@+id/ltAmount"
-        android:ems="10"
-        android:text="@string/zero" >
-
-        <requestFocus />
-    </EditText>
-
-    <TextView
-        android:id="@+id/ltTotal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/ltTipAdded"
-        android:layout_below="@+id/ltTipAdded"
-        android:layout_marginTop="30dp"
-        android:text="@string/textTotal"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/tvTotal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/ltTotal"
-        android:layout_alignBottom="@+id/ltTotal"
-        android:layout_alignLeft="@+id/tvTip"
-        android:text="@string/zero"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/tvTip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/ltTipAdded"
-        android:layout_alignBottom="@+id/ltTipAdded"
-        android:layout_marginLeft="17dp"
-        android:layout_toRightOf="@+id/ltTipAdded"
-        android:text="@string/zero"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/ltTip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/etAmount"
-        android:layout_marginTop="20dp"
-        android:text="@string/textTip"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <RadioGroup
-        android:id="@+id/rgTipPercent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/ltTip"
-        android:layout_marginLeft="30dp"
-        android:layout_toRightOf="@+id/ltTip"
-        android:orientation="vertical" >
-
-        <RadioButton
-            android:id="@+id/rbFifteenP"
+        <TableRow
+            android:id="@+id/tableRow1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:onClick="onTipSubmit"
-            android:text="@string/fifteenP" />
+            android:layout_height="wrap_content" >
 
-        <RadioButton
-            android:id="@+id/rbTwentyP"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onTipSubmit"
-            android:text="@string/twentyP" />
+            <TextView
+                android:id="@+id/ltAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/textAmount"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/blue" />
 
-        <RadioButton
-            android:id="@+id/rbOther"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onTipSubmit"
-            android:text="@string/Other" />
-
-    </RadioGroup>
-    
             <EditText
-            android:id="@+id/etOtherTip"
+                android:id="@+id/etAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:imeOptions="actionDone"
+                android:inputType="numberDecimal"
+                android:text="@string/textEmpty"
+                android:textColor="@color/blue" />
+
+            <requestFocus />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/rgTipPercent"
-            android:layout_toRightOf="@+id/rgTipPercent"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="@string/textOther"
-            android:inputType="numberDecimal" />
-    
+            android:layout_height="wrap_content" >
 
-    <TextView
-        android:id="@+id/ltTipAdded"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/ltTip"
-        android:layout_centerVertical="true"
-        android:text="@string/testTipAdded"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+            <TextView
+                android:id="@+id/ltTip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:text="@string/textTip"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/blue" />
 
-</RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin" >
+
+                <RadioGroup
+                    android:id="@+id/rgTipPercent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:orientation="vertical"
+                    android:textColor="@color/blue" >
+
+                    <RadioButton
+                        android:id="@+id/rbFifteenP"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:onClick="onTipSubmit"
+                        android:text="@string/fifteenP"
+                        android:textColor="@color/blue" />
+
+                    <RadioButton
+                        android:id="@+id/rbTwentyP"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onTipSubmit"
+                        android:text="@string/twentyP"
+                        android:textColor="@color/blue" />
+
+                    <RadioButton
+                        android:id="@+id/rbOther"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onTipSubmit"
+                        android:text="@string/Other"
+                        android:textColor="@color/blue" />
+                </RadioGroup>
+
+                <EditText
+                    android:id="@+id/etOtherTip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/rgTipPercent"
+                    android:layout_toRightOf="@+id/rgTipPercent"
+                    android:ems="10"
+                    android:hint="@string/textEmpty"
+                    android:imeOptions="actionDone"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/blue" />
+            </RelativeLayout>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/ltTipAdded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/testTipAdded"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/blue" />
+
+            <TextView
+                android:id="@+id/tvTip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="17dp"
+                android:layout_weight="1"
+                android:text="@string/zero"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/blue" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/ltTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/textTotal"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/blue" />
+
+            <TextView
+                android:id="@+id/tvTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/zero"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/blue" />
+
+        </TableRow>
+    </TableLayout>
+
+</ScrollView>

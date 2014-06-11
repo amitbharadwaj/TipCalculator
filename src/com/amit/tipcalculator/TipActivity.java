@@ -1,13 +1,15 @@
 package com.amit.tipcalculator;
 
-import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
+import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Button;
+import android.view.View.OnFocusChangeListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -15,6 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class TipActivity extends Activity {
+
+	protected static final int MSG_KEYBOARD_HIDE = 10;
 
 	private EditText etAmount;
 	
@@ -26,7 +30,17 @@ public class TipActivity extends Activity {
 
 	private Double amount = 0.0;
 	private Double tip = 0.0;
+	
+	private Handler mHandler = new Handler() {
+		public void handleMessage(android.os.Message msg) {
+			if (msg.what == MSG_KEYBOARD_HIDE ) {
+				imm.hideSoftInputFromWindow(etAmount.getWindowToken(), 0);						
+			}
+		};
+	};
 
+	InputMethodManager imm;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -38,7 +52,9 @@ public class TipActivity extends Activity {
 		tvTipTotal = (TextView) findViewById(R.id.tvTotal);
 		etOtherTip = (EditText) findViewById(R.id.etOtherTip);
 
-		updateTipAmount();  
+		imm = (InputMethodManager) getSystemService( Context.INPUT_METHOD_SERVICE);
+
+		updateTipAmount();
 		setUpListeners();
 	}
 
@@ -50,6 +66,9 @@ public class TipActivity extends Activity {
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				updateTipAmount();
+				
+				mHandler.removeMessages(MSG_KEYBOARD_HIDE);
+				mHandler.sendEmptyMessageDelayed(MSG_KEYBOARD_HIDE, 1000);
 			}
 
 			@Override
@@ -67,6 +86,9 @@ public class TipActivity extends Activity {
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				updateTipAmount();
+				
+				mHandler.removeMessages(MSG_KEYBOARD_HIDE);
+				mHandler.sendEmptyMessageDelayed(MSG_KEYBOARD_HIDE, 1000);
 			}
 
 			@Override
@@ -78,17 +100,40 @@ public class TipActivity extends Activity {
 			public void afterTextChanged(Editable s) {				
 			}
 		});
+		
+		etOtherTip.setOnFocusChangeListener(new OnFocusChangeListener() {
+			
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				if (hasFocus) {
+					if (rgTip.getCheckedRadioButtonId() != R.id.rbOther) {
+						RadioButton rbOther = (RadioButton) findViewById(R.id.rbOther);
+						rbOther.setChecked(true);
+					}
+				}
+				
+			}
+		});
 
 	}
 
 
 	public void onTipSubmit(View v) {
-		updateTipAmount(); 
+		int checkedRadio = rgTip.getCheckedRadioButtonId();
+		tip = getTipFromCheckedRadio(checkedRadio);
+		updateTipAmount();
+		
+		if (etOtherTip.hasFocus() && checkedRadio != R.id.rbOther) {
+			etOtherTip.clearFocus();
+			imm.hideSoftInputFromWindow(etAmount.getWindowToken(), 0);
+		}
 	}
 
 
 	private void updateTipAmount() {
-		amount = getAmountInDouble(etAmount.getText().toString(), "amount");        
+		String amountStr = etAmount.getText().toString();
+		amount = getAmountInDouble(amountStr, "amount");
+
 		tip = getTipFromCheckedRadio(rgTip.getCheckedRadioButtonId());
 		tvTip.setText(String.format("%.2f", tip));
 		tvTipTotal.setText(String.format("%.2f", amount + tip));
@@ -104,7 +149,7 @@ public class TipActivity extends Activity {
 			break;
 		case R.id.rbOther:
 			String otherTipString = etOtherTip.getText().toString();
-			if (otherTipString.equals(getString(R.string.textOther))) {
+			if (otherTipString.equals(getString(R.string.textEmpty))) {
 				etOtherTip.requestFocus();
 				break;
 			}
@@ -117,14 +162,19 @@ public class TipActivity extends Activity {
 	}
 
 
-	private Double getAmountInDouble(String string, String field) {
+	private Double getAmountInDouble(String amountStr, String field) {
 		Double amount = 0.0;
-		if (string == null || string.isEmpty()) {
+
+		if (amountStr == null || amountStr.isEmpty()) {
 			return amount;
+		}
+
+		if (amountStr.startsWith("$")) {
+			amountStr = amountStr.substring(1);
 		}
 		
 		try {
-			amount = Double.parseDouble(string);	
+			amount = Double.parseDouble(amountStr);	
 		} catch (NumberFormatException e) {
 			Toast.makeText(this, "Incorrect input in " + field, Toast.LENGTH_SHORT).show();
 		}
