@@ -9,3 +9,6 @@ Q. Which required and optional stories have you completed?
 Tip amount is updated automatically. Custom tip can be added. Added color. Used radio group rather than button.
 
 Q. GIF walkthrough of all required and optional stories
+
+![alt tag](https://github.com/amitbharadwaj/TipCalculator/blob/master/tipcalc1.gif)
+
