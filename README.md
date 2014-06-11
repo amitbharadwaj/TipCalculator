@@ -10,5 +10,5 @@ Tip amount is updated automatically. Custom tip can be added. Added color. Used 
 
 Q. GIF walkthrough of all required and optional stories
 
-![alt tag](https://github.com/amitbharadwaj/TipCalculator/blob/master/tipcalc1.gif)
+![licecap recording](tipcalc1.gif)
 
